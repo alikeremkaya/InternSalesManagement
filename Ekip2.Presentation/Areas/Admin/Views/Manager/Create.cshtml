@@ -1,0 +1,177 @@
+﻿@model Ekip2.Presentation.Areas.Admin.Models.ManagerVMs.ManagerCreateVM
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container mt-5">
+    <h1 class="custom-page-title">@Localizer["CreateManager"]</h1>
+    <hr />
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <form asp-action="Create" method="post" enctype="multipart/form-data" class="custom-form">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group row">
+                    <label asp-for="NewImage" class="col-sm-3 col-form-label">@Localizer["NewImage"]</label>
+                    <input asp-for="NewImage" type="file" class="form-control" />
+                    <span asp-validation-for="NewImage" class="text-danger"></span>
+                </div>
+                <div class="form-group row">
+                    <label asp-for="FirstName" class="col-sm-3 col-form-label">@Localizer["FirstName"]</label>
+                    <div class="col-sm-9">
+                        <input asp-for="FirstName" class="form-control" />
+                        <span asp-validation-for="FirstName" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label asp-for="LastName" class="col-sm-3 col-form-label">@Localizer["LastName"]</label>
+                    <div class="col-sm-9">
+                        <input asp-for="LastName" class="form-control" />
+                        <span asp-validation-for="LastName" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label asp-for="Email" class="col-sm-3 col-form-label">@Localizer["Email"]</label>
+                    <div class="col-sm-9">
+                        <input asp-for="Email" class="form-control" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label asp-for="Address" class="col-sm-3 col-form-label">@Localizer["Address"]</label>
+                    <div class="col-sm-9">
+                        <textarea asp-for="Address" class="form-control"></textarea>
+                        <span asp-validation-for="Address" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label asp-for="PhoneNumber" class="col-sm-3 col-form-label">@Localizer["PhoneNumber"]</label>
+                    <div class="col-sm-9">
+                        <input asp-for="PhoneNumber" class="form-control" />
+                        <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label asp-for="CompanyId" class="col-sm-3 col-form-label">@Localizer["Company"]</label>
+                    <div class="col-sm-9">
+                        <select asp-for="CompanyId" asp-items="@Model.Companies" class="form-control">
+                            <option value="">--- Select ---</option>
+                        </select>
+                        <span asp-validation-for="CompanyId" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label asp-for="Roles" class="col-sm-3 col-form-label">@Localizer["Role"]</label>
+                    <div class="col-sm-9">
+                        <select asp-for="Roles" asp-items="@Model.RoleList" class="form-control">
+                            <option value="">--- Select ---</option>
+                        </select>
+                        <span asp-validation-for="Roles" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="form-group row justify-content-center">
+                    <div class="col-sm-9">
+                        <input type="submit" value="@Localizer["Create"]" class="btn custom-btn custom-btn-primary" />
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="container mt-3 text-center">
+    <a asp-action="Index" class="btn custom-btn custom-btn-secondary">@Localizer["BackToList"]</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+
+<style>
+    body {
+        background: #eee;
+    }
+
+    .custom-page-title {
+        color: #8E24AA;
+        text-align: center;
+        margin-bottom: 30px;
+        font-size: 2em;
+    }
+
+    .container {
+        margin-top: 50px;
+    }
+
+    .custom-form {
+        background-color: white;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .col-form-label {
+        font-weight: bold;
+        color: #8E24AA;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 8px;
+        font-size: 1em;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+    .custom-btn {
+        text-decoration: none;
+        font-weight: bold;
+        padding: 10px 20px;
+        border-radius: 25px;
+        display: inline-block;
+        transition: background-color 0.3s ease;
+    }
+
+    .custom-btn-primary {
+        background-color: #8E24AA;
+        border: 1px solid #8E24AA;
+        color: white;
+    }
+
+        .custom-btn-primary:hover {
+            background-color: #6D1A9D;
+            border: 1px solid #6D1A9D;
+        }
+
+    .custom-btn-secondary {
+        background-color: #6C757D;
+        border: 1px solid #6C757D;
+        color: white;
+    }
+
+        .custom-btn-secondary:hover {
+            background-color: #5A6369;
+            border: 1px solid #5A6369;
+        }
+</style>
+
+<script>
+    function validatePhoneNumber(input) {
+        input.value = input.value.replace(/[^0-9]/g, '');
+    }
+</script>

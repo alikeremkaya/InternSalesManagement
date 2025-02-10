@@ -1,0 +1,163 @@
+﻿
+@model IEnumerable<Ekip2.Presentation.Areas.Manager.Models.EmployeeVMs.EmployeeListVM>
+
+@{
+    ViewData["Title"] = "Employees";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container mt-5">
+    <h1 class="page-title">@Localizer["Employees"]</h1>
+
+    <p class="text-center">
+        <a asp-action="Create" class="btn btn-create">@Localizer["CreateNewEmployee"]</a>
+    </p>
+    <br />
+    <br />
+    <div class="card-container row">
+        @foreach (var (item, index) in Model.Select((value, i) => (value, i + 1)))
+        {
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 card-animated">
+                    <div class="card-body">
+                        <div class="image-container">
+                            @if (item.Image is null)
+                            {
+                                <p class="image-placeholder">@Localizer["NoImagePleaseAdd"]</p>
+                            }
+                            else
+                            {
+                                <img class="image-preview" src="@($"data:image/png;base64,{Convert.ToBase64String(item.Image)}")" onclick="openModal(this.src)" />
+                            }
+                        </div>
+                        <h5 class="card-title">@item.FirstName @item.LastName</h5>
+                        <p class="card-text">@Localizer["Email"]: @item.Email</p>
+                        <p class="card-text">@Localizer["Address"]: @item.Address</p>
+                        <p class="card-text">@Localizer["PhoneNumber"]: @item.PhoneNumber</p>
+                        <p class="card-text">@Localizer["Company"]: @item.CompanyName</p>
+                        <p class="card-text">@Localizer["Role"]: @item.Roles</p>
+                    </div>
+                    <div class="card-footer">
+                        <div class="action-links">
+                            @Html.ActionLink(Localizer["Update"].Value, "Update", new { id = item.Id }, new { @class = "btn btn-update mr-2" })
+                            <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-delete" onclick="return confirm('Are you sure you want to delete this employee?')">@Localizer["Delete"]</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<style>
+    body {
+        background: #eee;
+    }
+
+    .container {
+        margin-top: 50px;
+    }
+
+    .page-title {
+        color: #8E24AA;
+        text-align: center;
+        margin-bottom: 30px;
+        font-size: 2em;
+    }
+
+    .btn-create {
+        text-decoration: none;
+        color: white;
+        font-weight: bold;
+        background-color: #8E24AA;
+        padding: 10px 20px;
+        border-radius: 25px;
+        display: inline-block;
+        transition: background-color 0.3s ease;
+    }
+
+        .btn-create:hover {
+            background-color: #6D1A9D;
+        }
+
+    .card-container {
+        margin-top: 20px;
+    }
+
+    .card-animated {
+        position: relative;
+        overflow: hidden;
+        transition: transform 0.3s ease-out;
+    }
+
+        .card-animated:hover {
+            transform: translateY(-5px);
+        }
+
+    .image-container {
+        height: 200px; /* İstediğiniz boyutu ayarlayabilirsiniz */
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        margin-bottom: 15px;
+        background-color: #f9f9f9; /* Arka plan rengi ekledim */
+    }
+
+    .image-preview {
+        max-height: 100%;
+        max-width: 100%;
+        object-fit: cover;
+    }
+
+    .image-placeholder {
+        color: #aaa;
+        font-size: 0.9em;
+        text-align: center;
+    }
+
+    .card-footer {
+        background-color: #f9f9f9;
+        border-top: 1px solid #ddd;
+    }
+
+    .action-links {
+        display: flex;
+        gap: 10px;
+        justify-content: center;
+    }
+
+    .btn-update,
+    .btn-delete {
+        text-decoration: none;
+        color: white;
+        padding: 5px 10px;
+        border-radius: 5px;
+        display: inline-block;
+        transition: background-color 0.3s ease;
+    }
+
+    .btn-update {
+        background-color: #8E24AA;
+        border: 1px solid #8E24AA;
+    }
+
+    .btn-delete {
+        background-color: #EE7B11;
+        border: 1px solid #EE7B11;
+    }
+
+        .btn-update:hover,
+        .btn-delete:hover {
+            background-color: #6D1A9D;
+        }
+</style>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

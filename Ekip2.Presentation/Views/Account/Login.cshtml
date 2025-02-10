@@ -1,0 +1,126 @@
+﻿@model Ekip2.Presentation.Models.LoginVMs.LoginVM
+
+@{
+    ViewData["Title"] = "Login";
+    Layout = null;
+    string x = "@";
+}
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>HR Management System</title>
+    <!-- plugins:css -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../vendors/feather/feather.css">
+    <link rel="stylesheet" href="../../vendors/ti-icons/css/themify-icons.css">
+    <link rel="stylesheet" href="../../vendors/css/vendor.bundle.base.css">
+    <!-- endinject -->
+    <!-- Plugin css for this page -->
+    <!-- End plugin css for this page -->
+    <!-- inject:css -->
+    <link rel="stylesheet" href="../../css/vertical-layout-light/style.css">
+    <!-- endinject -->
+    <link rel="shortcut icon" href="../../images/favicon.png" />
+    <style>
+        .btn-login {
+            background-color: #8E24AA;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container-scroller ">
+        <div class="container-fluid page-body-wrapper full-page-wrapper">
+
+            <div class="content-wrapper d-flex align-items-center auth px-0">
+                <div class="col-md-6">
+                    <img src="~/images/undraw_remotely_2j6y.svg" alt="Image" class="img-fluid">
+                </div>
+                <div class="row w-100 mx-0">
+                    <div class="col-lg-10 mx-auto">
+                        <div class="auth-form-light text-left py-5 px-4 px-sm-5">
+
+                            <h4>Hello! let's get started</h4>
+                            <h6 class="font-weight-light">Sign in to continue.</h6>
+                            <br/>
+                            <form asp-action="Login">
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                <div class="form-group">
+                                    <span asp-validation-for="Email" class="text-danger"></span>
+                                    <div class="input-group has-validation">
+                                        <input asp-for="Email" class="form-control" placeholder="Email" />
+                                        <span class="input-group-text">@x</span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <input type="password" asp-for="Password" class="form-control" placeholder="Password" id="password-field" />
+                                        <span class="input-group-text" id="toggle-password" style="cursor: pointer;">
+                                            <i class="ti-eye"></i>
+                                        </span>
+                                    </div>
+                                    <span asp-validation-for="Password" class="text-danger"></span>
+                                </div>
+                                <div class="my-2 d-flex justify-content-between align-items-center">
+                                    <div class="form-check">
+                                    </div>
+                                    <a class="auth-link text-black" asp-controller="Account" asp-action="ForgetPassword">Forgot password?</a>
+                                </div>
+                                <br />
+
+
+                                <div class="mt-3">
+                                    <input type="submit" value="SIGN IN" class="btn btn-block btn-login font-weight-medium auth-form-btn">
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- content-wrapper ends -->
+        </div>
+        <!-- page-body-wrapper ends -->
+    </div>
+    <!-- container-scroller -->
+    <!-- plugins:js -->
+    <script src="../../vendors/js/vendor.bundle.base.js"></script>
+    <!-- endinject -->
+    <!-- Plugin js for this page -->
+    <!-- End plugin js for this page -->
+    <!-- inject:js -->
+    <script src="~/../../js/off-canvas.js"></script>
+    <script src="~/../../js/hoverable-collapse.js"></script>
+    <script src="~/../../js/template.js"></script>
+    <script src="~/../../js/settings.js"></script>
+    <script src="~/../../js/todolist.js"></script>
+    <!-- endinject -->
+    <script>
+        document.getElementById('toggle-password').addEventListener('click', function (e) {
+            var passwordField = document.getElementById('password-field');
+            var passwordFieldType = passwordField.getAttribute('type');
+            if (passwordFieldType === 'password') {
+                passwordField.setAttribute('type', 'text');
+                this.innerHTML = '<i class="ti-eye-off" > </i>';
+            } else {
+                passwordField.setAttribute('type', 'password');
+                this.innerHTML = '<i class="ti-eye" > </i>';
+            }
+        });
+    </script>
+
+
+</body>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+
+</html>
+

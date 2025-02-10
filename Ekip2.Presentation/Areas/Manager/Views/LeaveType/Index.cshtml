@@ -1,0 +1,143 @@
+﻿@model IEnumerable<Ekip2.Presentation.Areas.Manager.Models.LeaveTypeVMs.LeaveTypeListVM>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container mt-5">
+
+
+    <div class="row justify-content-center">
+        <div class="col-lg-10 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h1 class="page-title">@Localizer["Leave Types"]</h1>
+
+                    <p class="text-center">
+                        <a asp-action="Create" class="btn btn-create">@Localizer["CreateNewLeaveType"]</a>
+                    </p>
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>@Localizer["Type"]</th>
+                                    <th>@Localizer["Description"]</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var (item, index) in Model.Select((value, i) => (value, i + 1)))
+                                {
+                                    <tr>
+                                        <td>@Html.DisplayFor(modelItem => item.Type)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.Description)</td>
+                                        <td>
+                                            <div class="action-links">
+                                                @Html.ActionLink(Localizer["Update"].Value, "Update", new { id = item.Id }, new { @class = "btn btn-update" })
+                                                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-delete" onclick="return confirm('Are you sure you want to delete admin?')">@Localizer["Delete"]</a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+
+<style>
+    body {
+        background: #eee;
+    }
+
+    .container {
+        margin-top: 50px;
+    }
+
+    .page-title {
+        color: #8E24AA;
+        text-align: center;
+        margin-bottom: 30px;
+        font-size: 2em;
+    }
+
+    .btn-create {
+        text-decoration: none;
+        color: #8E24AA;
+        font-weight: bold;
+        background-color: white;
+        padding: 10px 20px;
+        border-radius: 25px;
+        display: inline-block;
+        transition: background-color 0.3s ease;
+    }
+
+        .btn-create:hover {
+            background-color: #6D1A9D;
+        }
+
+    .table-responsive {
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        background-color: white;
+    }
+
+    .table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+        .table th,
+        .table td {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+        }
+
+        .table thead th {
+            background-color: #8E24AA;
+            color: white;
+            border-bottom: 2px solid #6D1A9D;
+        }
+
+    .action-links {
+        display: flex;
+        gap: 10px;
+    }
+
+    .btn-update,
+    .btn-delete {
+        text-decoration: none;
+        color: white;
+        padding: 5px 10px;
+        border-radius: 5px;
+        display: inline-block;
+        transition: background-color 0.3s ease;
+    }
+
+    .btn-update {
+        background-color: #8E24AA;
+        border: 1px solid #8E24AA;
+    }
+
+    .btn-delete {
+        background-color: #EE7B11;
+        border: 1px solid #EE7B11;
+    }
+
+        .btn-update:hover,
+        .btn-delete:hover {
+            background-color: #6D1A9D;
+        }
+</style>

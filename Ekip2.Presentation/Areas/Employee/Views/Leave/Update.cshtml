@@ -1,0 +1,136 @@
+﻿@model Ekip2.Presentation.Areas.Manager.Models.LeaveVMs.LeaveUpdateVM
+
+@{
+    ViewData["Title"] = "Update";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <h1 class="custom-page-title">@Localizer["UpdateLeave"]</h1>
+            <form asp-action="Update" method="post" class="form-custom">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <div class="form-group">
+                    <label asp-for="StartDate" class="control-label">@Localizer["StartDate"]</label>
+                    <input asp-for="StartDate" class="form-control" />
+                    <span asp-validation-for="StartDate" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="EndDate" class="control-label">@Localizer["EndDate"]</label>
+                    <input asp-for="EndDate" class="form-control" />
+                    <span asp-validation-for="EndDate" class="text-danger"></span>
+                </div>
+
+                <div class="form-group row">
+                    <label asp-for="LeaveTypeId" class="col-sm-3 col-form-label">@Localizer["LeaveType"]</label>
+                    <div class="col-sm-9">
+                        <select asp-for="LeaveTypeId" asp-items="@Model.LeaveTypes" class="form-control">
+                            <option value="">--- @Localizer["Select"] ---</option>
+                        </select>
+                        <span asp-validation-for="LeaveTypeId" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label asp-for="ManagerId" class="col-sm-3 col-form-label">@Localizer["Employee"]</label>
+                    <div class="col-sm-9">
+                        <select asp-for="ManagerId" asp-items="@Model.Managers" class="form-control">
+                            <option value="">--- @Localizer["Select"] ---</option>
+                        </select>
+                        <span asp-validation-for="ManagerId" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <input type="submit" value="@Localizer["Save"]" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="container mt-3 text-center">
+    <a asp-action="Index" class="btn btn-secondary">@Localizer["BackToList"]</a>
+</div>
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+<style>
+    body {
+        background: #eee;
+    }
+
+    .custom-page-title {
+        color: #8E24AA;
+        text-align: center;
+        margin-bottom: 30px;
+        font-size: 2em;
+    }
+
+    .container {
+        margin-top: 50px;
+    }
+
+    .form-custom {
+        background-color: white;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .control-label {
+        font-weight: bold;
+        color: #8E24AA;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 8px;
+        font-size: 1em;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+    .btn {
+        text-decoration: none;
+        font-weight: bold;
+        padding: 10px 20px;
+        border-radius: 25px;
+        display: inline-block;
+        transition: background-color 0.3s ease;
+    }
+
+    .btn-primary {
+        background-color: #8E24AA;
+        border: 1px solid #8E24AA;
+        color: white;
+    }
+
+        .btn-primary:hover {
+            background-color: #6D1A9D;
+            border: 1px solid #6D1A9D;
+        }
+
+    .btn-secondary {
+        background-color: #6C757D;
+        border: 1px solid #6C757D;
+        color: white;
+    }
+
+        .btn-secondary:hover {
+            background-color: #5A6369;
+            border: 1px solid #5A6369;
+        }
+</style>

@@ -1,0 +1,55 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    
+}
+<style>
+    .alert-message {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        opacity: 0.4;
+        z-index: 1000;
+        display: none;
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+</style>
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success alert-message">
+        @TempData["SuccessMessage"]
+    </div>
+}
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger alert-message">
+        @TempData["ErrorMessage"]
+    </div>
+}
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var successMessage = document.querySelector('.alert-success');
+        var errorMessage = document.querySelector('.alert-danger');
+
+        if (successMessage) {
+            successMessage.style.display = 'block';
+            setTimeout(function () {
+                successMessage.style.display = 'none';
+            }, 3500);
+        }
+
+        if (errorMessage) {
+            errorMessage.style.display = 'block';
+            setTimeout(function () {
+                errorMessage.style.display = 'none';
+            }, 3500);
+        }
+    });
+</script>
+ 

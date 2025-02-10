@@ -1,0 +1,297 @@
+﻿@model Ekip2.Presentation.Areas.Admin.Models.CompanyVMs.CompanyIndexVM
+
+@{
+    ViewData["Title"] = "Companies";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container mt-5">
+    <h1 class="page-title">@Localizer["Companies"]</h1>
+
+    <p class="text-center">
+        <button id="createCompany" class="btn btn-create" px-4" data-toggle="modal" data-target="#createCompanyModal">@Localizer["CreateNewCompany"]</button>
+       @*  <a asp-action="Create" class="btn btn-create"></a> *@
+    </p>
+    <br />
+    <br />
+    <br />
+    <div class="row">
+        @foreach (var item in Model.CompanyListVMs)
+        {
+            <div class="col-md-4 d-flex align-items-stretch">
+                <div class="card mb-4 card-custom" onclick="location.href='@Url.Action("Index", "Company", new { id = item.Id })';" style="cursor: pointer;">
+                    <div class="card-body">
+                        <h5 class="card-title">@item.Name</h5>
+                    </div>
+                    <div class="card-footer">
+                        <div class="card-actions">
+                            @Html.ActionLink(Localizer["Update"].Value, "Edit", new { id = item.Id }, new { @class = "btn btn-update" })
+                            @Html.ActionLink(Localizer["Delete"].Value, "Delete", new { id = item.Id }, new { @class = "btn btn-delete" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+<!-- Change Password Modal -->
+<div class="modal fade" id="createCompanyModal" tabindex="-1" role="dialog" aria-labelledby="createCompanyModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="createCompanyModalLabel">@Localizer["CreateNewCompany"]</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form asp-action="Create" class="custom-form">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="custom-form-group">
+                        <label asp-for="CompanyCreateVM.Name" class="control-label">@Localizer["CompanyName"]</label>
+                        <input asp-for="CompanyCreateVM.Name" class="form-control" />
+                        <span asp-validation-for="CompanyCreateVM.Name" class="text-danger"></span>
+                    </div>
+                    <br />
+                    <div class="custom-form-group">
+                        <label asp-for="CompanyCreateVM.Address" class="control-label">@Localizer["Address"]</label>
+                        <input asp-for="CompanyCreateVM.Address" class="form-control" />
+                        <span asp-validation-for="CompanyCreateVM.Address" class="text-danger"></span>
+                    </div>
+                    <br />
+                    <div class="custom-form-group">
+                        <label asp-for="CompanyCreateVM.PhoneNumber" class="control-label">@Localizer["PhoneNumber"]</label>
+                        <input asp-for="CompanyCreateVM.PhoneNumber" class="form-control" />
+                        <span asp-validation-for="CompanyCreateVM.PhoneNumber" class="text-danger"></span>
+                    </div>
+                    <br/>
+                    <div class="custom-form-group text-center">
+                        <input type="submit" value="@Localizer["Create"]" class="custom-btn custom-btn-create" />
+                    </div>
+                </form>
+                @if (ViewData.ModelState.ErrorCount > 0)
+                {
+                    <div class="alert alert-danger">
+                        @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+                        {
+                            <p>@error.ErrorMessage</p>
+                        }
+                    </div>
+                }
+                @if (TempData["SuccessMessage"] != null)
+                {
+                    <div class="alert alert-success">
+                        @TempData["SuccessMessage"]
+                    </div>
+                }
+                @if (TempData["ErrorMessage"] != null)
+                {
+                    <div class="alert alert-danger">
+                        @TempData["ErrorMessage"]
+                    </div>
+                }
+            </div>
+            <div class="modal-footer buttons">
+                <button id="changePasswordLink" class="custom-btn custom-btn-create" px-4" data-dismiss="modal">@Localizer["Close"]</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+
+<style>
+    body {
+        background: #eee;
+    }
+
+    .container {
+        margin-top: 50px;
+    }
+
+    .page-title {
+        color: #8E24AA;
+        text-align: center;
+        margin-bottom: 30px;
+        font-size: 2em;
+    }
+
+    .card-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        padding: 20px;
+    }
+
+    .card-custom {
+        border: none;
+        position: relative;
+        overflow: hidden;
+        border-radius: 8px;
+        cursor: pointer;
+        flex-direction: column;
+        justify-content: space-between;
+        display: flex;
+        height: 100%;
+    }
+
+        .card-custom:before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 4px;
+            height: 100%;
+            background-color: #E1BEE7;
+            transform: scaleY(1);
+            transition: all 0.5s;
+            transform-origin: bottom;
+        }
+
+        .card-custom:after {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 4px;
+            height: 100%;
+            background-color: #8E24AA;
+            transform: scaleY(0);
+            transition: all 0.5s;
+            transform-origin: bottom;
+        }
+
+        .card-custom:hover::after {
+            transform: scaleY(1);
+        }
+
+    .card {
+        background-color: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 20px;
+        height: 250px;
+    }
+
+    .card-title {
+        color: #EE7B11;
+        font-size: 1.5em;
+        margin-bottom: 15px;
+        text-align: center;
+    }
+
+    .card-body {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .card-footer {
+        margin-top: auto;
+    }
+
+    .card-actions {
+        display: flex;
+        justify-content: space-around;
+    }
+
+    .btn {
+        text-decoration: none;
+        color: white;
+        padding: 8px 15px;
+        border-radius: 5px;
+        font-size: 0.8em;
+        width: 45%;
+        text-align: center;
+    }
+
+    .btn-update {
+        background-color: #8E24AA;
+        border: 1px solid #8E24AA;
+        color: white;
+    }
+
+    .btn-delete {
+        background-color: #EE7B11;
+        border: 1px solid #EE7B11;
+        color: white;
+    }
+
+    .custom-btn {
+        text-decoration: none;
+        color: white;
+        font-weight: bold;
+        padding: 10px 20px;
+        border-radius: 25px;
+        display: inline-block;
+        transition: background-color 0.3s ease;
+    }
+
+    .custom-btn-create {
+        background-color: #8E24AA;
+    }
+
+    .createCompany {
+        text-decoration: none;
+        color: white;
+        font-weight: bold;
+        background-color: #8E24AA;
+        padding: 10px 20px;
+        border-radius: 25px;
+        display: inline-block;
+        transition: background-color 0.3s ease;
+    }
+
+        .btn-create:hover {
+            background-color: #6D1A9D;
+        }
+
+
+    .modal-content {
+        border-radius: 10px;
+    }
+
+    .modal-header {
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+        background-color: #8E24AA;
+        color: white;
+        border-bottom: none;
+    }
+
+    .modal-body {
+        padding: 20px;
+    }
+
+    .modal-footer {
+        border-bottom-left-radius: 10px;
+        border-bottom-right-radius: 10px;
+        background-color: #f8f9fa;
+    }
+
+    .btn-create {
+        text-decoration: none;
+        color: white;
+        font-weight: bold;
+        background-color: #8E24AA;
+        padding: 10px 20px;
+        border-radius: 25px;
+        display: inline-block;
+        transition: background-color 0.3s ease;
+    }
+</style>
+<script>
+    document.querySelector('#createCompany').addEventListener('click', function (event) {
+        event.preventDefault();
+        $('#createCompanyModal').modal('show');
+    });
+</script>
