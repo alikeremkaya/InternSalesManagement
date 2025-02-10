@@ -9,7 +9,7 @@ namespace Ekip2.Application.Services.MailServices
             try
             {
                 var newMail = new MimeMessage();
-                newMail.From.Add(MailboxAddress.Parse("info.hrmanagementsystem@gmail.com"));
+                newMail.From.Add(MailboxAddress.Parse("rty"));
                 newMail.To.Add(MailboxAddress.Parse(mailDTO.Email));
                 newMail.Subject = mailDTO.Subject;
                 var builder = new BodyBuilder();
@@ -17,7 +17,7 @@ namespace Ekip2.Application.Services.MailServices
                 newMail.Body = builder.ToMessageBody();
                 var smtp = new SmtpClient();
                 await smtp.ConnectAsync("smtp.gmail.com", 587, SecureSocketOptions.StartTls);
-                await smtp.AuthenticateAsync("info.hrmanagementsystem@gmail.com", "ubmsobcwohmdrvcr");
+                await smtp.AuthenticateAsync("hgf", "ytr");
                 await smtp.SendAsync(newMail);
                 await smtp.DisconnectAsync(true);
             }
